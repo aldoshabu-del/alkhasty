@@ -1244,9 +1244,10 @@
             </div>
           </div>
 
-          <form class="contacts-form" id="leadForm">
-            <div class="contacts-label">Форма заявки</div>
-            <div style="height:6px;"></div>
+          <form class="contacts-form"
+      id="leadForm"
+      action="https://formsubmit.co/s1410@mail.RU"
+      method="POST">
 
             <div class="form-group">
               <label for="leadName">Имя *</label>
@@ -1267,14 +1268,15 @@
               <label for="leadComment">Комментарий</label>
               <textarea id="leadComment" name="comment" placeholder="Удобное время для звонка, дополнительные вопросы…"></textarea>
             </div>
-
+            <input type="hidden" name="_subject" value="Новая заявка на участок с сайта Алхасты">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://aldoshabu-del.github.io/-/#contacts">
             <button type="submit" class="btn btn-primary" style="width:100%; margin-top:6px;">
               Отправить заявку
             </button>
 
             <div class="form-note">
-              Сейчас форма демонстрационная: данные выводятся в консоль браузера.
-              Позже сюда можно подключить отправку в CRM, Telegram-бот или на email.
+              Заявка принята в работу сотрудиником
             </div>
           </form>
         </div>
@@ -1331,19 +1333,6 @@
     });
   });
 
-  // Демонстрационная обработка формы
-  document.getElementById("leadForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const payload = {
-      name: document.getElementById("leadName").value,
-      phone: document.getElementById("leadPhone").value,
-      topic: document.getElementById("leadTopic").value,
-      comment: document.getElementById("leadComment").value
-    };
-    console.log("Новая заявка с сайта alhasty:", payload);
-    alert("Заявка отправлена (сейчас — лог в консоль браузера).");
-    e.target.reset();
-  });
 </script>
 
 </body>
