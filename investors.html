@@ -1350,9 +1350,10 @@ body {
           </div>
         </div>
 
-        <form class="contacts-form" id="investForm">
-          <div class="contacts-label">Форма обратной связи</div>
-          <div style="height:6px;"></div>
+        <form class="contacts-form"
+      id="investForm"
+      action="https://formsubmit.co/s1410@mail.ru"
+      method="POST">
 
           <div class="form-group">
             <label for="invName">Имя *</label>
@@ -1374,19 +1375,19 @@ body {
             <input id="invPhone" name="phone" required />
           </div>
 
-          <div class="form-group">
-            <label for="invFocus">Формат интереса *</label>
-            <input id="invFocus" name="focus" placeholder="Соинвестирование, управление, резидентство…" required />
-          </div>
+         <div class="form-group">
+    <label for="invComment">Комментарий</label>
+    <textarea id="invComment" name="comment" placeholder="Сроки, объём, дополнительные вопросы…"></textarea>
+  </div>
 
-          <div class="form-group">
-            <label for="invComment">Комментарий</label>
-            <textarea id="invComment" name="comment" placeholder="Сроки, объём, дополнительные вопросы…"></textarea>
-          </div>
+  <!-- скрытые поля для сервиса отправки -->
+  <input type="hidden" name="_subject" value="Новая инвест-заявка с сайта Алхасты">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_next" value="https://aldoshabu-del.github.io/-/investors.html#contacts">
 
-          <button type="submit" class="btn btn-primary" style="width:100%; margin-top:6px;">
-            Отправить запрос
-          </button>
+  <button type="submit" class="btn btn-primary" style="width:100%; margin-top:6px;">
+    Отправить запрос
+  </button>
 
           <div class="form-note">
             Сейчас форма демонстрационная: данные выводятся в консоль браузера.
@@ -1449,4 +1450,5 @@ body {
 
 </body>
 </html>
+
 
