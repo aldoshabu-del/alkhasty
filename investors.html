@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Инвесторам — Многопрофильная зона посёлка «Алхасты»</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+        content="Инвестиционная презентация многопрофильной зоны коттеджного посёлка «Алхасты»: структура проекта, финансовая модель, параметры доходности и государственная поддержка." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+      scroll-behavior: smooth;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    :root {
+      --bg-main: #020617;
+      --bg-card: rgba(15, 23, 42, 0.96);
+      --accent-green: #16a34a;
+      --accent-gold: #eab308;
+      --accent-blue: #3b82f6;
+      --border-soft: rgba(148, 163, 184, 0.34);
+      --text-muted: #9ca3af;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.75);
+      --radius-xl: 26px;
+    }
+
+    .page-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Шапка */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(20px);
+      background: linear-gradient(to right, rgba(15,23,42,0.97), rgba(15,23,42,0.9));
+      border-bottom: 1px solid rgba(148,163,184,0.4);
+    }
+
+    .nav {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #22c55e, #16a34a 45%, #065f46 95%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f9fafb;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 0 16px rgba(34, 197, 94, 0.7);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 3px;
+      color: #cbd5f5;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent-green), var(--accent-gold));
+      transition: width 0.22s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 0 0, #22c55e, #16a34a 40%, #15803d 100%);
+      color: #ecfdf5;
+      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.48);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(22, 163, 74, 0.65);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #e5e7eb;
+      border-color: rgba(148, 163, 184, 0.7);
+    }
+
+    .btn-outline:hover {
+      border-color: #eab308;
+      color: #fef9c3;
+    }
+
+    .nav-burger {
+      display: none;
+      background: none;
+      border: none;
+      color: #e5e7eb;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      background:
+        radial-gradient(circle at top left, rgba(22,163,74,0.25), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(30,64,175,0.25), transparent 55%),
+        linear-gradient(135deg, #020617, #020617);
+    }
+
+    .hero-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 16px 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(234,179,8,0.7);
+      background: rgba(15,23,42,0.9);
+      color: #facc15;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #eab308;
+      box-shadow: 0 0 10px rgba(234,179,8,0.7);
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 3.2vw, 34px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, #bbf7d0, #fbbf24);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: #cbd5f5;
+      max-width: 520px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-meta strong { color: #e5e7eb; }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148,163,184,0.4);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-soft);
+      padding: 14px 16px;
+      font-size: 13px;
+    }
+
+    .hero-card-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-card-main {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .hero-stat {
+      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(148,163,184,0.5);
+    }
+
+    /* Разделы */
+    section {
+      padding: 26px 16px;
+    }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .section-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent-blue);
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 460px;
+    }
+
+    /* Карточки и сетки */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border-radius: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 14px 14px 12px;
+      box-shadow: var(--shadow-soft);
+      font-size: 13px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .card-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: #e5e7eb;
+    }
+
+    .pill-green {
+      border-color: rgba(34,197,94,0.7);
+      background: rgba(22,163,74,0.14);
+      color: #bbf7d0;
+    }
+
+    .pill-gold {
+      border-color: rgba(234,179,8,0.8);
+      background: rgba(250,204,21,0.12);
+      color: #fef9c3;
+    }
+
+    /* Таблица финансов */
+    .table-wrap {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.96);
+      box-shadow: var(--shadow-soft);
+      font-size: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: rgba(15,23,42,0.98);
+    }
+
+    th, td {
+      padding: 7px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(31,41,55,0.9);
+    }
+
+    th {
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15,23,42,0.96);
+    }
+
+    tbody tr:nth-child(odd) {
+      background: rgba(12,18,32,0.96);
+    }
+
+    .num { text-align: right; white-space: nowrap; }
+
+    /* Калькулятор */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+    }
+
+    .form-group label {
+      color: var(--text-muted);
+    }
+
+    .form-group input,
+    .form-group select {
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.8);
+      background: rgba(15,23,42,0.96);
+      color: #e5e7eb;
+      font-size: 13px;
+      padding: 6px 8px;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--accent-green);
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.4);
+    }
+
+    .calc-output {
+      border-radius: 16px;
+      padding: 10px 12px;
+      background: radial-gradient(circle at top left, rgba(16,185,129,0.22), transparent 60%), var(--bg-card);
+      border: 1px solid rgba(52,211,153,0.55);
+      font-size: 13px;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .calc-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .calc-value {
+      font-weight: 600;
+    }
+
+    /* Контакты / подвал */
+    .contacts-card {
+      border-radius: 20px;
+      padding: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      font-size: 13px;
+    }
+
+    .contacts-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .contacts-main {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .contacts-extra {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    footer {
+      border-top: 1px solid rgba(148,163,184,0.35);
+      background: #020617;
+    }
+
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 12px 16px 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    /* Адаптив */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid-2,
+      .calc-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        inset: 52px 16px auto 16px;
+        padding: 10px 12px;
+        border-radius: 18px;
+        background: rgba(15,23,42,0.98);
+        border: 1px solid rgba(148,163,184,0.7);
+      }
+      .nav-burger {
+        display: block;
+      }
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page-wrap">
+
+  <!-- ШАПКА -->
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo-mark">A</div>
+        <div>
+          <div class="logo-text-main">АЛХАСТЫ</div>
+          <div class="logo-text-sub">инвестиционный профиль</div>
+        </div>
+      </div>
+
+      <button class="nav-burger" id="navBurger" aria-label="Меню">☰</button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="alhasty.html">На главный сайт</a>
+        <a href="#thesis">Тезис</a>
+        <a href="#model">Финмодель</a>
+        <a href="#mix">Структура МФЗ</a>
+        <a href="#support">Господдержка</a>
+        <a href="#contacts">Контакты</a>
+      </div>
+
+      <div class="nav-cta">
+        <button class="btn btn-outline" onclick="location.href='alhasty.html#map'">
+          Карта участков
+        </button>
+        <button class="btn btn-primary" onclick="scrollToId('contacts')">
+          Запросить презентацию
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Инвесторам многопрофильной зоны
+          </div>
+
+          <h1 class="hero-title">
+            Многопрофильная зона <span>посёлка «Алхасты»</span><br>
+            как якорный объект для инвестиций
+          </h1>
+
+          <p class="hero-subtitle">
+            Комплекс из девяти объектов: духовный центр, центральное здание МФЗ,
+            спортивный и медицинский центры, торговля и сервис, открытый рынок,
+            гостевой дом, парковая зона и администрация. :contentReference[oaicite:0]{index=0}
+          </p>
+
+          <div class="hero-meta">
+            <div><strong>Общая площадь МФЗ:</strong> ~18&nbsp;200&nbsp;м² :contentReference[oaicite:1]{index=1}</div>
+            <div><strong>Капзатраты (стройка+оборудование):</strong> ~473&nbsp;млн&nbsp;₽ :contentReference[oaicite:2]{index=2}</div>
+            <div><strong>Базовый доход от аренды:</strong> до 68,17&nbsp;млн&nbsp;₽ в год :contentReference[oaicite:3]{index=3}</div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="scrollToId('model')">
+              Открыть финансовую модель
+            </button>
+            <button class="btn btn-outline" onclick="scrollToId('mix')">
+              Структура объектов
+            </button>
+          </div>
+
+          <div class="hero-note">
+            Расчёты основаны на текущей концепции и могут уточняться
+            по итогам ПСД и маркетингового исследования.
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="hero-card-title">Инвестиционный профиль</div>
+          <div class="hero-card-main">Базовый горизонт окупаемости ~7 лет</div>
+          <div class="hero-card-grid">
+            <div class="hero-stat">
+              <div class="calc-label">Окупаемость (base case)</div>
+              <div class="calc-value">≈ 6,9 года</div>
+            </div>
+            <div class="hero-stat">
+              <div class="calc-label">Модель монетизации</div>
+              <div class="calc-value">аренда + операционный доход</div>
+            </div>
+            <div class="hero-stat">
+              <div class="calc-label">Клиентский поток</div>
+              <div class="calc-value">постоянные и временные резиденты
+                (до 299 и 3&nbsp;215 чел.) :contentReference[oaicite:4]{index=4}
+              </div>
+            </div>
+            <div class="hero-stat">
+              <div class="calc-label">Роль МФЗ</div>
+              <div class="calc-value">якорь для всего поселка и туристического кластера</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ИНВЕСТ-ТЕЗИС -->
+    <section id="thesis">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Инвест-тезис</div>
+            <h2 class="section-title">Почему многопрофильная зона «Алхасты» интересна инвестору</h2>
+          </div>
+          <p class="section-subtitle">
+            Сочетание готовой территории КРТ, стабильного базового спроса жителей
+            поселка и туристического потока региона.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-label">Якорная локация</div>
+            <div class="card-title">Крупный жилой кластер + туризм</div>
+            <div>
+              Территория 25&nbsp;га включена в договор комплексного развития
+              незастроенной территории (КРТ), с планом освоения до 2030 года
+              и первой очередью в 2026 году. :contentReference[oaicite:5]{index=5}
+              <div class="pill-row">
+                <span class="pill pill-green">до 800 постоянных жителей</span>
+                <span class="pill">туристический поток региона</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-label">Сбалансированный mix</div>
+            <div class="card-title">9 функциональных блоков</div>
+            <div>
+              От духовного центра и МФЗ до рынка, сервиса и гостевого дома —
+              единая концепция, позволяющая диверсифицировать выручку и
+              управлять потоками посетителей. :contentReference[oaicite:6]{index=6}
+              <div class="pill-row">
+                <span class="pill">арендаторы разных профилей</span>
+                <span class="pill pill-gold">устойчивый денежный поток</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-label">Господдержка</div>
+            <div class="card-title">Социальная и инженерная инфраструктура</div>
+            <div>
+              Детский сад, ФОК, электросети, дорога категории IV
+              запланированы с привлечением бюджетного финансирования,
+              что снижает нагрузку на инвестора. :contentReference[oaicite:7]{index=7}
+              <div class="pill-row">
+                <span class="pill pill-green">уменьшение CAPEX</span>
+                <span class="pill">рост привлекательности локации</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ФИНМОДЕЛЬ -->
+    <section id="model">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Финансовая модель</div>
+            <h2 class="section-title">Базовые параметры и интерактивный расчёт</h2>
+          </div>
+          <p class="section-subtitle">
+            На этой странице используются агрегированные данные концепции.
+            Под детальный due diligence будет подготовлена расширенная модель
+            с пообъектной разработкой ставок и CAPEX.
+          </p>
+        </div>
+
+        <div class="calc-grid">
+          <!-- БАЗОВЫЕ ПАРАМЕТРЫ -->
+          <div class="card">
+            <div class="card-label">Базовые параметры</div>
+            <div class="card-title">Консолидированная многопрофильная зона</div>
+            <div style="font-size:13px;">
+              <p>
+                По сводной таблице многопрофильной зоны:
+                общая площадь — 18&nbsp;200&nbsp;м², базовый годовой доход от аренды —
+                68&nbsp;170&nbsp;000&nbsp;₽, строительные затраты — 381&nbsp;200&nbsp;000&nbsp;₽,
+                оборудование — 91&nbsp;800&nbsp;000&nbsp;₽. :contentReference[oaicite:8]{index=8}
+              </p>
+
+              <div class="calc-output" style="margin-top:6px;">
+                <div class="calc-row">
+                  <span class="calc-label">CAPEX (стройка + оборудование):</span>
+                  <span class="calc-value" id="capexBase">473&nbsp;000&nbsp;000&nbsp;₽</span>
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Базовый годовой доход от аренды:</span>
+                  <span class="calc-value" id="revenueBase">68&nbsp;170&nbsp;000&nbsp;₽</span>
+                </div>
+                <div class="calc-row">
+                  <span class="calc-label">Простейшая окупаемость (без дисконтирования):</span>
+                  <span class="calc-value" id="paybackBase">≈ 6,9 года</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ИНТЕРАКТИВНЫЙ КАЛЬКУЛЯТОР -->
+          <div class="card">
+            <div class="card-label">Сценарный анализ</div>
+            <div class="card-title">Настройка загрузки и операционных затрат</div>
+
+            <div class="form-group">
+              <label for="loadFactor">Коэффициент заполняемости и монетизации (0,5–1,2)</label>
+              <input id="loadFactor" type="number" step="0.05" min="0.5" max="1.2" value="1.0">
+            </div>
+
+            <div class="form-group">
+              <label for="opexShare">Операционные расходы, % от выручки</label>
+              <input id="opexShare" type="number" step="1" min="10" max="70" value="35">
+            </div>
+
+            <div class="form-group">
+              <label for="otherCapex">Дополнительный CAPEX (благоустройство, брендинг), ₽</label>
+              <input id="otherCapex" type="number" step="1000000" value="0">
+            </div>
+
+            <div class="calc-output" id="calcResult" style="margin-top:6px;">
+              <div class="calc-row">
+                <span class="calc-label">Скорректированная годовая выручка:</span>
+                <span class="calc-value" id="outRevenue"></span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">EBITDA (после OPEX):</span>
+                <span class="calc-value" id="outEbitda"></span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">Итого CAPEX (с учётом доп. затрат):</span>
+                <span class="calc-value" id="outCapex"></span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">Окупаемость по EBITDA (simple payback):</span>
+                <span class="calc-value" id="outPayback"></span>
+              </div>
+              <div class="calc-row">
+                <span class="calc-label">Ориентир по доходности:</span>
+                <span class="calc-value" id="outYield"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">
+          *Расчёты носут предварительный характер и не учитывают дисконтирование денежного потока,
+          налоговый режим, структуру финансирования и возможные субсидии. Для инвестиционного решения
+          требуется детализированная финансовая модель и отдельное технико-экономическое обоснование.
+        </p>
+      </div>
+    </section>
+
+    <!-- СТРУКТУРА МНОГОПРОФИЛЬНОЙ ЗОНЫ -->
+    <section id="mix">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Структура МФЗ</div>
+            <h2 class="section-title">Девять объектов многопрофильной зоны</h2>
+          </div>
+          <p class="section-subtitle">
+            Ниже — укрупнённый пообъектный состав с указанием площади,
+            ориентировочной стоимости строительства, оборудования и арендного потенциала. :contentReference[oaicite:9]{index=9}
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>Объект</th>
+                <th class="num">Площадь, м²</th>
+                <th class="num">Стройка, млн ₽</th>
+                <th class="num">Оборуд., млн ₽</th>
+                <th class="num">Аренда, млн ₽/год</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Духовный центр</td>
+                <td class="num">700</td>
+                <td class="num">21,0</td>
+                <td class="num">3,6</td>
+                <td class="num">1,92</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Центральное здание МФЗ</td>
+                <td class="num">4&nbsp;600</td>
+                <td class="num">138,0</td>
+                <td class="num">21,5</td>
+                <td class="num">30,0</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Спортивный комплекс</td>
+                <td class="num">1&nbsp;700</td>
+                <td class="num">52,5</td>
+                <td class="num">13,0</td>
+                <td class="num">11,25</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Медицинский центр</td>
+                <td class="num">1&nbsp;500</td>
+                <td class="num">46,5</td>
+                <td class="num">25,5</td>
+                <td class="num">5,5</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Торговля и сервис</td>
+                <td class="num">1&nbsp;200</td>
+                <td class="num">36,2</td>
+                <td class="num">7,7</td>
+                <td class="num">0*</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Открытый рынок</td>
+                <td class="num">1&nbsp;500</td>
+                <td class="num">20,0</td>
+                <td class="num">3,0</td>
+                <td class="num">4,5</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Гостевой дом</td>
+                <td class="num">1&nbsp;200</td>
+                <td class="num">36,0</td>
+                <td class="num">11,0</td>
+                <td class="num">15,0</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Парковая зона</td>
+                <td class="num">5&nbsp;000</td>
+                <td class="num">7,0</td>
+                <td class="num">3,5</td>
+                <td class="num">0*</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Администрация</td>
+                <td class="num">800</td>
+                <td class="num">24,0</td>
+                <td class="num">3,0</td>
+                <td class="num">0*</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th colspan="2">Итого по многопрофильной зоне</th>
+                <th class="num">18&nbsp;200</th>
+                <th class="num">381,2</th>
+                <th class="num">91,8</th>
+                <th class="num">68,17</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <p style="font-size:11px; color:var(--text-muted); margin-top:6px;">
+          *По парковым и административным объектам прямой арендный доход не планируется, но
+          они обеспечивают привлекательность локации, формируют поток для платных сервисов
+          и стабилизируют загрузку других объектов. Цифры приведены по рабочей концепции
+          многопрофильной зоны. :contentReference[oaicite:10]{index=10}
+        </p>
+      </div>
+    </section>
+
+    <!-- ГОСПОДДЕРЖКА -->
+    <section id="support">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Господдержка</div>
+            <h2 class="section-title">Социальная инфраструктура и инженерия за счёт бюджета</h2>
+          </div>
+          <p class="section-subtitle">
+            Часть капиталоёмких объектов и инфраструктуры предполагается реализовать
+            с участием бюджетного финансирования или институтов развития. :contentReference[oaicite:11]{index=11}
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="card-label">Социальные объекты</div>
+            <div class="card-title">Детский сад и ФОК</div>
+            <div>
+              На территории резервируются два участка под детский сад на 220 мест
+              и физкультурно-оздоровительный комплекс. Проектирование — за инвестором,
+              строительство — предполагается за счёт бюджета. :contentReference[oaicite:12]{index=12}
+              <div class="pill-row">
+                <span class="pill pill-green">минус нагрузка на CAPEX</span>
+                <span class="pill">плюс ценность для жителей</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-label">Инженерная инфраструктура</div>
+            <div class="card-title">Электросети и дорога</div>
+            <div>
+              Планируется бюджетное финансирование: линия электропередачи 0,4&nbsp;кВ
+              протяжённостью 3,9&nbsp;км, две КТП 2×630&nbsp;кВт, а также дорога категории IV
+              протяжённостью 3,9&nbsp;км с асфальтобетонным покрытием. :contentReference[oaicite:13]{index=13}
+              <div class="pill-row">
+                <span class="pill pill-gold">снижение барьера входа</span>
+                <span class="pill">ускорение освоения территории</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section id="contacts">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Следующие шаги</div>
+            <h2 class="section-title">Индивидуальная сессия для инвестора</h2>
+          </div>
+          <p class="section-subtitle">
+            Для профессиональных инвесторов и партнёров возможна подготовка
+            расширённой модели (DCF, сценарный анализ, структура сделки).
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="contacts-card">
+            <div class="contacts-label">Форматы участия</div>
+            <div class="contacts-main">
+              • долевое участие в строительстве многопрофильной зоны<br>
+              • покуп

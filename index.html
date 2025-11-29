@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Коттеджный посёлок «Алхасты» — официальный сайт</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+        content="Коттеджный посёлок «Алхасты» на берегу реки Асса: современные одноэтажные дома, развитая инфраструктура, собственный парк и спортивный кластер." />
+
+  <!-- Шрифт (можно заменить при желании) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+      scroll-behavior: smooth;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ---------- Глобальные цвета / фирменный стиль ---------- */
+    :root {
+      --bg-main: #020617;
+      --bg-alt: #020818;
+      --bg-card: rgba(15, 23, 42, 0.9);
+      --accent-green: #16a34a;
+      --accent-green-soft: rgba(22, 163, 74, 0.15);
+      --accent-gold: #eab308;
+      --border-soft: rgba(148, 163, 184, 0.35);
+      --text-muted: #9ca3af;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.75);
+      --radius-xl: 26px;
+    }
+
+    .page-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- Шапка ---------- */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(22px);
+      background: linear-gradient(to right, rgba(15,23,42,0.96), rgba(15,23,42,0.85));
+      border-bottom: 1px solid rgba(148,163,184,0.3);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #22c55e, #16a34a 45%, #065f46 95%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f9fafb;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.65);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 4px;
+      color: #cbd5f5;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent-green), var(--accent-gold));
+      transition: width 0.22s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 0 0, #22c55e, #16a34a 40%, #15803d 100%);
+      color: #ecfdf5;
+      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.45);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(22, 163, 74, 0.6);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #e5e7eb;
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+
+    .btn-outline:hover {
+      border-color: #eab308;
+      color: #fef9c3;
+    }
+
+    .nav-burger {
+      display: none;
+      background: none;
+      border: none;
+      color: #e5e7eb;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+      background:
+        radial-gradient(circle at top left, rgba(22,163,74,0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.16), transparent 50%),
+        linear-gradient(135deg, #020617, #020617);
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 16px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(74, 222, 128, 0.4);
+      background: rgba(15,23,42,0.85);
+      color: #a7f3d0;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    .hero-title {
+      font-size: clamp(30px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, #bbf7d0, #facc15);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: #cbd5f5;
+      max-width: 550px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-meta strong {
+      color: #e5e7eb;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148,163,184,0.3);
+      background:
+        linear-gradient(145deg, rgba(15,23,42,0.95), rgba(15,23,42,0.9));
+      box-shadow: var(--shadow-soft);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero-card-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #9ca3af;
+    }
+
+    .hero-card-main {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .hero-tag {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(30,64,175,0.55);
+      color: #bfdbfe;
+      font-size: 11px;
+    }
+
+    /* ---------- Разделы ---------- */
+
+    section {
+      padding: 32px 16px;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent-gold);
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+
+    /* ---------- Карточки преимуществ ---------- */
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border-radius: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .card-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: #d1d5db;
+      line-height: 1.5;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid rgba(148,163,184,0.5);
+      color: #e5e7eb;
+    }
+
+    .pill-green {
+      border-color: rgba(34,197,94,0.6);
+      background: rgba(22,163,74,0.15);
+      color: #bbf7d0;
+    }
+
+    .pill-gold {
+      border-color: rgba(234,179,8,0.7);
+      background: rgba(250,204,21,0.08);
+      color: #fef9c3;
+    }
+
+    /* ---------- Блок типов домов ---------- */
+
+    .homes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .home-card {
+      border-radius: 18px;
+      padding: 12px 12px 10px;
+      background: radial-gradient(circle at top right, rgba(250,204,21,0.12), transparent 55%), var(--bg-card);
+      border: 1px solid var(--border-soft);
+      font-size: 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .home-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .home-main {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .home-meta-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .home-price {
+      font-weight: 600;
+      color: #bbf7d0;
+    }
+
+    /* ---------- Блок инфраструктуры ---------- */
+
+    .inf-rows {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 16px;
+    }
+
+    .inf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .inf-item {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .inf-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 4px;
+      background: radial-gradient(circle at 30% 30%, #22c55e, #166534);
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+    }
+
+    .inf-right-card {
+      border-radius: 18px;
+      padding: 14px;
+      background: radial-gradient(circle at top left, rgba(37,99,235,0.35), transparent 60%), var(--bg-card);
+      border: 1px solid rgba(129,140,248,0.6);
+      box-shadow: var(--shadow-soft);
+      font-size: 13px;
+    }
+
+    .inf-stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .inf-stat {
+      padding: 6px 10px;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 12px;
+    }
+
+    /* ---------- Карта ---------- */
+
+    .section-map {
+      background: radial-gradient(circle at top, rgba(22,163,74,0.12), transparent 55%), #020617;
+    }
+
+    .map-frame-wrap {
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(148,163,184,0.4);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.95);
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 520px;
+      border: none;
+      background: #020617;
+    }
+
+    .map-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ---------- Документы / правила ---------- */
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+    }
+
+    .docs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .doc-item {
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .doc-name {
+      font-weight: 500;
+    }
+
+    .doc-tag {
+      font-size: 11px;
+      color: #a5b4fc;
+    }
+
+    .docs-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ---------- Контакты ---------- */
+
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 16px;
+    }
+
+    .contacts-card,
+    .contacts-form {
+      border-radius: 20px;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      font-size: 13px;
+    }
+
+    .contacts-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .contacts-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .contacts-main {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .contacts-extra {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .form-group {
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.8);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 13px;
+      padding: 7px 9px;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent-green);
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.5);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ---------- Подвал ---------- */
+
+    footer {
+      border-top: 1px solid rgba(148,163,184,0.35);
+      background: #020617;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      color: #e5e7eb;
+      gap: 4px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+    }
+
+    .dot-free { background:#22c55e; }
+    .dot-reserved { background:#eab308; }
+    .dot-sold { background:#ef4444; }
+    .dot-municipal { background:#3b82f6; }
+
+    /* ---------- Адаптив ---------- */
+
+    @media (max-width: 960px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .homes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .inf-rows,
+      .docs-grid,
+      .contacts-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        inset: 52px 16px auto 16px;
+        padding: 10px 12px;
+        border-radius: 18px;
+        background: rgba(15,23,42,0.98);
+        border: 1px solid rgba(148,163,184,0.6);
+      }
+      .nav-burger {
+        display: block;
+      }
+      .hero-inner {
+        padding-top: 22px;
+      }
+      .grid-3,
+      .homes-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .map-frame {
+        height: 420px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page-wrap">
+
+  <!-- ШАПКА -->
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo-mark">A</div>
+        <div>
+          <div class="logo-text-main">АЛХАСТЫ</div>
+          <div class="logo-text-sub">коттеджный посёлок у реки</div>
+        </div>
+      </div>
+
+      <button class="nav-burger" id="navBurger" aria-label="Меню">☰</button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#about">О поселке</a>
+        <a href="#homes">Дома</a>
+        <a href="#infra">Инфраструктура</a>
+        <a href="#map">Карта участков</a>
+        <a href="#docs">Правила</a>
+        <a href="#contacts">Контакты</a>
+      </div>
+
+      <div class="nav-cta">
+        <button class="btn btn-outline" onclick="scrollToId('map')">Выбрать участок</button>
+        <button class="btn btn-primary" onclick="scrollToId('contacts')">
+          Оставить заявку
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Старт продаж — март 2025
+          </div>
+
+          <h1 class="hero-title">
+            Коттеджный посёлок <span>«Алхасты»</span><br>
+            на берегу реки Асса
+          </h1>
+
+          <p class="hero-subtitle">
+            Современный поселок в окружении лесного массива: одноэтажные дома в едином стиле,
+            широкие улицы, центральный парк, детский сад, ФОК и многофункциональная общественно-деловая зона.
+          </p>
+
+          <div class="hero-meta">
+            <div><strong>Площадь территории:</strong> 25 га</div>
+            <div><strong>До аэропорта Магас:</strong> ~20 км</div>
+            <div><strong>Планируемые жители:</strong> до 800 чел.</div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="scrollToId('map')">
+              Выбрать участок на карте
+            </button>
+            <button class="btn btn-outline" onclick="scrollToId('homes')">
+              Посмотреть типы домов
+            </button>
+          </div>
+
+          <div class="hero-note">
+            Территория получена инвестором по договору комплексного развития незастроенной территории.
+            Первая очередь ввода в эксплуатацию — 2026 год.
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <div class="hero-card-title">Многопрофильная зона посёлка</div>
+          <div class="hero-card-main">Жизнь, работа и отдых в одном месте</div>
+
+          <div class="hero-card-grid">
+            <div>
+              <div class="card-label">Общественный центр</div>
+              <div class="card-body">
+                Духовный центр, МФЗ, медицинский центр, открытый рынок, торговля и сервис, администрация поселка.
+              </div>
+            </div>
+            <div>
+              <div class="card-label">Спорт и парк</div>
+              <div class="card-body">
+                ФОК, три спортплощадки, центральный парк и набережная по берегу реки Асса.
+              </div>
+            </div>
+          </div>
+
+          <div class="pill-row">
+            <span class="hero-tag">Единый дизайн-код и правила проживания</span>
+            <span class="hero-tag">Автономные коммуникации и широкие улицы</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- О ПОСЁЛКЕ -->
+    <section id="about">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">О поселке</div>
+            <h2 class="section-title">Городской комфорт в загородной тишине</h2>
+          </div>
+          <p class="section-subtitle">
+            Посёлок расположен на юго-восточной окраине с.п. Алхасты, на пересечении
+            ул. Центральной и ул. Зязикова, в 200 метрах от реки Асса и в непосредственной
+            близости к лесному массиву. Дорога до участка — федеральная трасса.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="card-label">Формат</div>
+            <div class="card-title">Коттеджный поселок нового поколения</div>
+            <div class="card-body">
+              До 100 индивидуальных домов в едином стиле, малоэтажные
+              многоквартирные дома до 5 этажей и отдельная общественно-деловая зона
+              для торговли, сервиса и туризма.
+              <div class="pill-row">
+                <span class="pill pill-green">ИЖС и малоэтажная застройка</span>
+                <span class="pill">Предпринимательство и рекреация</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-label">Комфорт и инфраструктура</div>
+            <div class="card-title">Все важное — внутри поселка</div>
+            <div class="card-body">
+              Детский сад на 220 мест, ФОК, спортивные площадки, центральный парк,
+              набережная, рынок, медицинский центр, кафе и ресторан, офисы и коворкинг —
+              без необходимости выезжать в город.
+              <div class="pill-row">
+                <span class="pill pill-gold">Социальные объекты с господдержкой</span>
+                <span class="pill">Пешеходная и велоинфраструктура</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-label">Правила и сообщество</div>
+            <div class="card-title">Чёткие стандарты жизни</div>
+            <div class="card-body">
+              Утверждены устав ТСЖ, правила застройки и проживания, регламент
+              пользования общими зонами — от единых требований к архитектуре
+              до экологичных практик и соседских отношений.
+              <div class="pill-row">
+                <span class="pill">ТСЖ «Алхасты»</span>
+                <span class="pill pill-green">Единый стиль застройки</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ТИПЫ ДОМОВ -->
+    <section id="homes">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Дома</div>
+            <h2 class="section-title">Линейка проектов домов</h2>
+          </div>
+          <p class="section-subtitle">
+            Все проекты — кирпичные дома с утеплителем, разработанные специально под
+            «Алхасты»: единый стиль, энергоэффективные решения и адаптация под
+            участки от 4 до 12 соток.
+          </p>
+        </div>
+
+        <div class="homes-grid">
+          <div class="home-card">
+            <div class="home-name">Дом 75 м² — «Стародачный»</div>
+            <div class="home-main">
+              1 этаж, 2 спальни, чердак, кирпич с облицовкой деревом.
+            </div>
+            <div class="home-meta-row">
+              <span class="pill">Участок 4 сотки</span>
+              <span class="home-price">от 5,5 млн ₽</span>
+            </div>
+            <div class="card-body">
+              Идеален как первый дом за городом или компактный дом для пары.
+            </div>
+          </div>
+
+          <div class="home-card">
+            <div class="home-name">Дом 104 м² — «Семейный»</div>
+            <div class="home-main">
+              1 этаж, 3 спальни, 2 с/у, кирпич, классический английский стиль.
+            </div>
+            <div class="home-meta-row">
+              <span class="pill">Участок 6 соток</span>
+              <span class="home-price">от 7,7 млн ₽</span>
+            </div>
+            <div class="card-body">
+              Оптимальное решение для семьи из 4 человек, просторная кухня-гостиная.
+            </div>
+          </div>
+
+          <div class="home-card">
+            <div class="home-name">Дом 116–136 м² — «Парк» и «Классика»</div>
+            <div class="home-main">
+              1 этаж, 3 спальни, 2 с/у, стили шале и классика, облицовка камнем и деревом.
+            </div>
+            <div class="home-meta-row">
+              <span class="pill">Участки 6–12 соток</span>
+              <span class="home-price">8,5–10,6 млн ₽</span>
+            </div>
+            <div class="card-body">
+              Дома для тех, кто хочет больше пространства и приватности.
+            </div>
+          </div>
+
+          <div class="home-card">
+            <div class="home-name">Дома 180–315 м² — «Большая семья»</div>
+            <div class="home-main">
+              3–5 спален, 2–4 с/у, одно- и двухэтажные дома в классическом и современном стиле.
+            </div>
+            <div class="home-meta-row">
+              <span class="pill">Участки 12 соток</span>
+              <span class="home-price">13,3–20 млн ₽</span>
+            </div>
+            <div class="card-body">
+              Для крупных семей и тех, кто планирует домашний офис, кабинет или мастерскую.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ИНФРАСТРУКТУРА -->
+    <section id="infra">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Инфраструктура</div>
+            <h2 class="section-title">Многопрофильная зона и общественные пространства</h2>
+          </div>
+          <p class="section-subtitle">
+            Общественно-деловой центр обеспечивает работу, сервис, спорт и досуг жителям посёлка
+            и гостям туристического кластера региона.
+          </p>
+        </div>
+
+        <div class="inf-rows">
+          <div class="inf-list">
+            <div class="inf-item">
+              <div class="inf-dot"></div>
+              <div>
+                <strong>Духовный центр — 700 м²</strong><br>
+                Пространство для духовной и культурной жизни сообщества, мероприятий и встреч.
+              </div>
+            </div>
+
+            <div class="inf-item">
+              <div class="inf-dot"></div>
+              <div>
+                <strong>Центральное здание МФЗ — 4 600 м²</strong><br>
+                Офисы, сервисы для резидентов, коворкинг, конференц-зона, кафе и рестораны.
+              </div>
+            </div>
+
+            <div class="inf-item">
+              <div class="inf-dot"></div>
+              <div>
+                <strong>Спортивный комплекс и ФОК</strong><br>
+                Спортивно-оздоровительный центр, тренажёрные и игровые залы, три спортивные площадки,
+                маршруты для бега и прогулок.
+              </div>
+            </div>
+
+            <div class="inf-item">
+              <div class="inf-dot"></div>
+              <div>
+                <strong>Медицинский центр — 1 500 м²</strong><br>
+                Базовый объём медицинских услуг для жителей и комплексной диагностики.
+              </div>
+            </div>
+
+            <div class="inf-item">
+              <div class="inf-dot"></div>
+              <div>
+                <strong>Рынок, торговля и сервис, гостевой дом</strong><br>
+                Открытый рынок, магазины, кафе, сервисные компании и гостевой дом для туристов и инвесторов.
+              </div>
+            </div>
+
+            <div class="inf-item">
+              <div class="inf-dot"></div>
+              <div>
+                <strong>Парк и набережная</strong><br>
+                Центральный парк отдыха, благоустроенные прогулочные зоны и набережная вдоль реки Асса.
+              </div>
+            </div>
+          </div>
+
+          <aside class="inf-right-card">
+            <div class="card-label">Инвестиционные параметры общественной зоны</div>
+            <div class="card-title" style="font-size:15px; margin-bottom:6px;">
+              Потенциал аренды и загрузки
+            </div>
+            <div class="card-body">
+              Суммарная площадь общественно-деловой зоны — порядка 18 200 м²
+              с прогнозной выручкой от аренды до 68 млн ₽ в год при полной загрузке.
+            </div>
+
+            <div class="inf-stat-row">
+              <div class="inf-stat">
+                <strong>Постоянные жители:</strong><br>
+                ~800 чел.
+              </div>
+              <div class="inf-stat">
+                <strong>Временные посетители:</strong><br>
+                до 3 200 чел. в год.
+              </div>
+              <div class="inf-stat">
+                <strong>Коммуникации:</strong><br>
+                электросети, дороги и соцобъекты с господдержкой.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- КАРТА УЧАСТКОВ -->
+    <section id="map" class="section-map">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Карта участков</div>
+            <h2 class="section-title">Выберите участок в «Алхасты»</h2>
+          </div>
+          <p class="section-subtitle">
+            Нажмите на участок на карте или в таблице: увидите статус, площадь, цену и ВРИ.
+            Для предварительного бронирования оставьте заявку прямо на карте.
+          </p>
+        </div>
+
+        <div class="map-frame-wrap">
+          <!-- Встраиваем существующую карту index-map.html -->
+          <iframe
+            src="index-map.html"
+            title="Карта участков коттеджного поселка «Алхасты»"
+            class="map-frame"
+            id="mapFrame">
+          </iframe>
+        </div>
+
+        <div class="map-note">
+          Цвета статуса: зелёный — свободен, жёлтый — резерв, красный — продан,
+          синий — муниципальные участки.
+        </div>
+      </div>
+    </section>
+
+    <!-- ДОКУМЕНТЫ И ПРАВИЛА -->
+    <section id="docs">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Документы</div>
+            <h2 class="section-title">Правила застройки и проживания</h2>
+          </div>
+          <p class="section-subtitle">
+            В посёлке действует товарищество собственников жилья «Алхасты», устав и
+            регламенты которого закрепляют единый стиль застройки и комфортные
+            правила совместного проживания.
+          </p>
+        </div>
+
+        <div class="docs-grid">
+          <div>
+            <div class="docs-list">
+              <div class="doc-item">
+                <div>
+                  <div class="doc-name">Устав ТСЖ «Алхасты»</div>
+                  <div class="doc-tag">структура управления, права и обязанности собственников</div>
+                </div>
+                <span class="pill">Внутренний документ</span>
+              </div>
+
+              <div class="doc-item">
+                <div>
+                  <div class="doc-name">Правила застройки и проживания</div>
+                  <div class="doc-tag">архитектурный стиль, шум, парковка, животные, экология</div>
+                </div>
+                <span class="pill pill-green">Единый дизайн-код</span>
+              </div>
+
+              <div class="doc-item">
+                <div>
+                  <div class="doc-name">Правила пользования общими зонами</div>
+                  <div class="doc-tag">парк, детские и спортивные площадки, зоны пикников</div>
+                </div>
+                <span class="pill">Комфорт и безопасность</span>
+              </div>
+
+              <div class="doc-item">
+                <div>
+                  <div class="doc-name">Справка об общей концепции проекта</div>
+                  <div class="doc-tag">описание территории, этапы реализации, господдержка</div>
+                </div>
+                <span class="pill pill-gold">Для инвесторов</span>
+              </div>
+            </div>
+
+            <div class="docs-note">
+              Полные тексты документов предоставляются заинтересованным покупателям
+              и инвесторам по запросу.
+            </div>
+          </div>
+
+          <aside class="contacts-card" style="background: radial-gradient(circle at top left, rgba(250,204,21,0.14), transparent 55%), var(--bg-card);">
+            <div class="contacts-label">Код посёлка</div>
+            <div class="contacts-main" style="margin-bottom:6px;">
+              «Алхасты» — поселок с ясными правилами, сильным сообществом и уважением к природе
+            </div>
+            <div class="contacts-extra">
+              • запрещены открытые костры, сжигание мусора и рубка деревьев без согласования<br>
+              • ограничено содержание животных и регламентировано обращение с отходами<br>
+              • регламентированы заборы, шумные работы, размещение хозяйственных построек и изменение ландшафта.
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section id="contacts">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Контакты</div>
+            <h2 class="section-title">Оставить заявку или запросить презентацию</h2>
+          </div>
+          <p class="section-subtitle">
+            Напишите, какой формат вас интересует: участок под строительство,
+            готовый дом, участие в развитии многопрофильной зоны, партнёрство или инвестирование.
+          </p>
+        </div>
+
+        <div class="contacts-grid">
+          <div class="contacts-card">
+            <div class="contacts-row">
+              <div class="contacts-label">Расположение</div>
+              <div class="contacts-main">
+                с.п. Алхасты, Сунженский район, Республика Ингушетия
+              </div>
+              <div class="contacts-extra">
+                Координаты участка: 43.174030, 44.994100<br>
+                ~25 км до Магаса и Назрани, ~20 км до аэропорта Магас.
+              </div>
+            </div>
+
+            <div style="height:10px;"></div>
+
+            <div class="contacts-row">
+              <div class="contacts-label">Для связи</div>
+              <div class="contacts-main">
+                Телефон / мессенджер: <strong>+7 (___) ___-__-__</strong><br>
+                Email: <strong>info@alhasty.ru</strong> (замени на фактические данные)
+              </div>
+              <div class="contacts-extra">
+                Мы свяжемся с вами, отправим актуальный прайс, мастер-план и презентацию,
+                а также зарезервируем участок на выбранный вами срок.
+              </div>
+            </div>
+          </div>
+
+          <form class="contacts-form" id="leadForm">
+            <div class="contacts-label">Форма заявки</div>
+            <div style="height:6px;"></div>
+
+            <div class="form-group">
+              <label for="leadName">Имя *</label>
+              <input id="leadName" name="name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="leadPhone">Телефон или мессенджер *</label>
+              <input id="leadPhone" name="phone" required />
+            </div>
+
+            <div class="form-group">
+              <label for="leadTopic">Что вас интересует? *</label>
+              <input id="leadTopic" name="topic" placeholder="Например: участок 6–8 соток, дом 104 м², инвестирование…" required />
+            </div>
+
+            <div class="form-group">
+              <label for="leadComment">Комментарий</label>
+              <textarea id="leadComment" name="comment" placeholder="Удобное время для звонка, дополнительные вопросы…"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top:6px;">
+              Отправить заявку
+            </button>
+
+            <div class="form-note">
+              Сейчас форма демонстрационная: данные выводятся в консоль браузера.
+              Позже сюда можно подключить отправку в CRM, Telegram-бот или на email.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ПОДВАЛ -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        © <span id="year"></span> Коттеджный посёлок «Алхасты». Все права защищены.
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <span class="status-pill">
+          <span class="status-dot dot-free"></span>Свободен
+        </span>
+        <span class="status-pill">
+          <span class="status-dot dot-reserved"></span>Резерв
+        </span>
+        <span class="status-pill">
+          <span class="status-dot dot-sold"></span>Продан
+        </span>
+        <span class="status-pill">
+          <span class="status-dot dot-municipal"></span>Муниципальные участки
+        </span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Год в подвале
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Скролл к секции
+  function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // Бургер-меню
+  const navBurger = document.getElementById("navBurger");
+  const navLinks = document.getElementById("navLinks");
+  navBurger.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+  });
+
+  // Закрытие мобильного меню при клике по ссылке
+  document.querySelectorAll("#navLinks a").forEach(a => {
+    a.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+    });
+  });
+
+  // Демонстрационная обработка формы
+  document.getElementById("leadForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById("leadName").value,
+      phone: document.getElementById("leadPhone").value,
+      topic: document.getElementById("leadTopic").value,
+      comment: document.getElementById("leadComment").value
+    };
+    console.log("Новая заявка с сайта alhasty:", payload);
+    alert("Заявка отправлена (сейчас — лог в консоль браузера).");
+    e.target.reset();
+  });
+</script>
+
+</body>
+</html>
