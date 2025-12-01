@@ -28,105 +28,214 @@ function editorStatusDotClass(status) {
 
 function editorColorsByStatus(status) {
   const s = (status || "").toLowerCase();
-  if (s.includes("муниц")) return { fill: "#60A5FA55", stroke: "#2563EB" };
-  if (s.includes("прод")) return { fill: "#EF444455", stroke: "#B91C1C" };
-  if (s.includes("резерв")) return { fill: "#FACC1555", stroke: "#CA8A04" };
-  return { fill: "#22C55E55", stroke: "#16A34A" };
-}
-
-function editorSelectedColorsByStatus(status) {
-  const s = (status || "").toLowerCase();
-  if (s.includes("муниц")) return { fill: "#3B82F670", stroke: "#1D4ED8" };
-  if (s.includes("прод")) return { fill: "#EF444470", stroke: "#B91C1C" };
-  if (s.includes("резерв")) return { fill: "#FACC1570", stroke: "#CA8A04" };
-  return { fill: "#4ADE8070", stroke: "#22C55E" };
-}
-
-// ---------------------------------------
-// ИНИЦИАЛИЗАЦИЯ КАРТЫ
-// ---------------------------------------
-function initEditor() {
-  editorMap = new ymaps.Map("map", {
-    center: [43.1743, 44.9943],
-    zoom: 16,
-    type: "yandex#hybrid"
-  });
-
-  editorMap.controls.remove("trafficControl");
-  editorMap.controls.remove("fullscreenControl");
-
-  // ---------------------------------------
-  //   ПОДЛОЖКА PNG (Rectangle)
-  // ---------------------------------------
-  const latMin = 43.17200148099052;
-  const latMax = 43.17607685437098;
-  const lonMin = 44.98947002377316;
-  const lonMax = 44.99881483998105;
-
-  editorPlanOverlay = new ymaps.Rectangle(
-    [
-      [latMin, lonMin],
-      [latMax, lonMax]
-    ],
-    {},
-    {
-      fillImageHref: "plan.png",
-      fillMethod: "stretch",
-      opacity: 0.75,
-      strokeWidth: 0,
-      zIndex: 0
-    }
-  );
-
-  editorMap.geoObjects.add(editorPlanOverlay);
-
-  // ---------------------------------------
-  //   ЗАГРУЗКА plotsData.json
-  // ---------------------------------------
-  fetch("plotsData.json")
-    .then(r => r.json())
-    .then(data => {
-      editorPlots = data;
-      editorRenderPlots();
-      editorRenderCards();
-      editorSetupUI();
-    })
-    .catch(err => {
-      console.warn("plotsData.json отсутствует, редактор работает с пустыми данными.");
-      editorSetupUI();
-    });
+  if (s.includes("муниц")) {
+    return {
+      fill: "rgba(59,130,246,0.35)",
+      stroke: "#1D4ED8"
+    };
+  }
+  if (s.includes("прод")) {
+    return {
+      fill: "rgba(239,68,68,0.35)",
+      stroke: "#B91C1C"
+    };
+  }
+  if (s.includes("резерв")) {
+    return {
+      fill: "rgba(234,179,8,0.35)",
+      stroke: "#B45309"
+    };
+  }
+  return {
+    fill: "rgba(34,197,94,0.35)",
+    stroke: "#15803D"
+  };
 }
 
 // ---------------------------------------
-// РИСОВАНИЕ ПОЛИГОНОВ
+// ЧТЕНИЕ / ЗАПИСЬ ФОРМЫ
+// ---------------------------------------
+function editorFillForm(plot) {
+  document.getElementById("fieldId").value = plot.id || "";
+  document.getElementById("fieldName").value = plot.name || "";
+  document.getElementById("fieldStatus").value = plot.status || "Свободен";
+  document.getElementById("fieldArea").value = plot.area || "";
+  document.getElementById("fieldAreaValue").value = plot.areaValue ?? "";
+  document.getElementById("fieldPrice").value = plot.price || "";
+  document.getElementById("fieldPriceValue").value = plot.priceValue ?? "";
+  document.getElementById("fieldVri").value = plot.vri || "";
+  document.getElementById("fieldPurpose").value = plot.purpose || "";
+  document.getElementById("fieldProjectDescription").value = plot.projectDescription || "";
+  document.getElementById("fieldComment").value = plot.comment || "";
+  document.getElementById("fieldZone").value = plot.zone || "";
+}
+
+function editorReadFormIntoPlot(plot) {
+  plot.id = document.getElementById("fieldId").value.trim() || plot.id;
+  plot.name = document.getElementById("fieldName").value.trim();
+  plot.status = document.getElementById("fieldStatus").value.trim();
+  plot.area = document.getElementById("fieldArea").value.trim();
+  const areaVal = document.getElementById("fieldAreaValue").value.trim();
+  plot.areaValue = areaVal ? Number(areaVal) : null;
+
+  plot.price = document.getElementById("fieldPrice").value.trim();
+  const priceVal = document.getElementById("fieldPriceValue").value.trim();
+  plot.priceValue = priceVal ? Number(priceVal) : null;
+
+  plot.vri = document.getElementById("fieldVri").value.trim();
+  plot.purpose = document.getElementById("fieldPurpose").value.trim();
+  plot.projectDescription = document.getElementById("fieldProjectDescription").value.trim();
+  plot.comment = document.getElementById("fieldComment").value.trim();
+  plot.zone = document.getElementById("fieldZone").value.trim();
+}
+
+// ---------------------------------------
+// ОТРИСОВКА УЧАСТКОВ НА КАРТЕ
 // ---------------------------------------
 function editorRenderPlots() {
-  editorPlots.forEach(p => {
-    if (p.polygon) editorMap.geoObjects.remove(p.polygon);
-  });
+  if (!editorMap) return;
 
   editorPlots.forEach(plot => {
-    const style = editorColorsByStatus(plot.status);
+    if (plot.polygon) {
+      editorMap.geoObjects.remove(plot.polygon);
+      plot.polygon = null;
+    }
+
+    if (!plot.coords || !Array.isArray(plot.coords) || plot.coords.length < 3) return;
+
+    const c = editorColorsByStatus(plot.status);
 
     const polygon = new ymaps.Polygon(
-      [ (plot.coords || []).map(([lon, lat]) => [lat, lon]) ],
-      { hintContent: plot.name },
+      [plot.coords.map(([lon, lat]) => [lat, lon])],
       {
-        fillColor: style.fill,
-        strokeColor: style.stroke,
+        hintContent: plot.name || `Участок ${plot.id}`,
+        plotId: plot.id
+      },
+      {
+        fillColor: c.fill,
+        strokeColor: c.stroke,
         strokeWidth: 2,
-        cursor: "pointer",
-        zIndex: 10
+        draggable: true,
+        fillOpacity: 0.6
       }
     );
 
-    plot.polygon = polygon;
-    editorMap.geoObjects.add(polygon);
+    polygon.editor = polygon.editor || null;
 
     polygon.events.add("click", () => {
       editorSelectPlot(plot, true);
     });
+
+    editorMap.geoObjects.add(polygon);
+    plot.polygon = polygon;
   });
+}
+
+// ---------------------------------------
+// ВЫБОР УЧАСТКА
+// ---------------------------------------
+function editorSelectPlot(plot, centerTo) {
+  editorSelectedPlot = plot;
+  editorFillForm(plot);
+  editorHighlightSelectedCard();
+
+  if (centerTo && plot.coords && plot.coords.length) {
+    const bounds = ymaps.util.bounds.fromPoints(
+      plot.coords.map(([lon, lat]) => [lat, lon])
+    );
+    editorMap.setBounds(bounds, { checkZoomRange: true, duration: 300 });
+  }
+
+  if (plot.polygon) {
+    try {
+      if (!plot.polygon.editor) {
+        plot.polygon.editor = plot.polygon.editor || null;
+      }
+      plot.polygon.editor && plot.polygon.editor.startEditing();
+    } catch (e) {
+      console.warn("Не удалось запустить редактирование полигона:", e);
+    }
+  }
+}
+
+function editorHighlightSelectedCard() {
+  const cards = document.querySelectorAll(".plot-card");
+  cards.forEach(c => c.classList.remove("selected"));
+
+  if (editorSelectedPlot) {
+    const el = document.querySelector(
+      `.plot-card[data-plot-id="${editorSelectedPlot.id}"]`
+    );
+    if (el) el.classList.add("selected");
+  }
+}
+
+// ---------------------------------------
+// СОХРАНЕНИЕ ТЕКУЩЕГО УЧАСТКА
+// ---------------------------------------
+function editorSaveCurrentPlot() {
+  if (!editorSelectedPlot) {
+    alert("Сначала выберите участок.");
+    return;
+  }
+
+  if (editorSelectedPlot.polygon && editorSelectedPlot.polygon.geometry) {
+    const coords = editorSelectedPlot.polygon.geometry.getCoordinates();
+    if (!coords || !coords[0] || coords[0].length < 3) {
+      alert("Участок должен содержать минимум 3 точки.");
+      return;
+    }
+
+    editorSelectedPlot.coords = coords[0].map(([lat, lon]) => [lon, lat]);
+  }
+
+  editorReadFormIntoPlot(editorSelectedPlot);
+
+  const c = editorColorsByStatus(editorSelectedPlot.status);
+  editorSelectedPlot.polygon.options.set({
+    fillColor: c.fill,
+    strokeColor: c.stroke
+  });
+
+  editorRenderCards();
+  alert("Изменения по участку сохранены (в памяти редактора). Не забудь выгрузить JSON.");
+}
+
+// ---------------------------------------
+// УДАЛЕНИЕ УЧАСТКА
+// ---------------------------------------
+function editorDeleteCurrentPlot() {
+  if (!editorSelectedPlot) {
+    alert("Сначала выберите участок для удаления.");
+    return;
+  }
+  if (!confirm(`Удалить участок "${editorSelectedPlot.name || editorSelectedPlot.id}"?`)) {
+    return;
+  }
+
+  if (editorSelectedPlot.polygon) {
+    editorMap.geoObjects.remove(editorSelectedPlot.polygon);
+  }
+
+  editorPlots = editorPlots.filter(p => p !== editorSelectedPlot);
+  editorSelectedPlot = null;
+  editorFillForm({
+    id: "",
+    name: "",
+    status: "Свободен",
+    area: "",
+    areaValue: "",
+    price: "",
+    priceValue: "",
+    vri: "",
+    purpose: "",
+    projectDescription: "",
+    comment: "",
+    zone: ""
+  });
+
+  editorRenderCards();
+  alert("Удалено.");
 }
 
 // ---------------------------------------
@@ -154,239 +263,212 @@ function editorRenderCards() {
         </div>
         <div>
           <span class="status-dot ${editorStatusDotClass(plot.status)}"></span>
-          ${plot.area || "-"}, ${plot.price || "-"}
+          Площадь: ${plot.area || "-"} м²
+        </div>
+        <div>Цена: ${plot.price || "-"}</div>
+        <div style="font-size:11px; color:#6b7280; margin-top:2px;">
+          ВРИ: ${plot.vri || "-"}
         </div>
       `;
 
-      card.onclick = () => editorSelectPlot(plot, true);
+      card.onclick = () => {
+        const p = editorPlots.find(x => x.id === plot.id);
+        if (p) {
+          if (editorSelectedPlot && editorSelectedPlot.polygon && editorSelectedPlot.polygon.editor) {
+            try {
+              editorSelectedPlot.polygon.editor.stopEditing();
+            } catch (e) {}
+          }
+          editorSelectPlot(p, true);
+        }
+      };
 
       container.appendChild(card);
     });
-}
-
-function editorHighlightCard(id) {
-  document.querySelectorAll(".plot-card").forEach(c => {
-    c.classList.toggle("selected", c.dataset.plotId == id);
-  });
-}
-
-// ---------------------------------------
-// ВЫБОР УЧАСТКА
-// ---------------------------------------
-function editorSelectPlot(plot, center = false) {
-  if (editorSelectedPlot && editorSelectedPlot !== plot) {
-    const c = editorColorsByStatus(editorSelectedPlot.status);
-    editorSelectedPlot.polygon.options.set({
-      fillColor: c.fill,
-      strokeColor: c.stroke
-    });
-    editorSelectedPlot.polygon.editor && editorSelectedPlot.polygon.editor.stopEditing();
-  }
-
-  editorSelectedPlot = plot;
-  editorHighlightCard(plot.id);
-
-  const highlight = editorSelectedColorsByStatus(plot.status);
-  plot.polygon.options.set({
-    fillColor: highlight.fill,
-    strokeColor: highlight.stroke
-  });
-
-  plot.polygon.editor.startEditing();
-  editorFillForm(plot);
-
-  if (center) {
-    const bounds = plot.polygon.geometry.getBounds();
-    if (bounds) editorMap.setBounds(bounds, { duration: 200 });
-  }
-}
-
-// ---------------------------------------
-// ФОРМА
-// ---------------------------------------
-function editorFillForm(plot) {
-  document.getElementById("fieldId").value = plot.id || "";
-  document.getElementById("fieldName").value = plot.name || "";
-  document.getElementById("fieldStatus").value = plot.status || "Свободен";
-  document.getElementById("fieldArea").value = plot.area || "";
-  document.getElementById("fieldAreaValue").value = plot.areaValue ?? "";
-  document.getElementById("fieldPrice").value = plot.price || "";
-  document.getElementById("fieldPriceValue").value = plot.priceValue ?? "";
-  document.getElementById("fieldVri").value = plot.vri || "";
-  document.getElementById("fieldPurpose").value = plot.purpose || "";
-  document.getElementById("fieldProjectDescription").value = plot.projectDescription || "";
-  document.getElementById("fieldComment").value = plot.comment || "";
-}
-
-function editorReadFormIntoPlot(plot) {
-  plot.id = document.getElementById("fieldId").value.trim();
-  plot.name = document.getElementById("fieldName").value.trim();
-  plot.status = document.getElementById("fieldStatus").value;
-  plot.area = document.getElementById("fieldArea").value.trim();
-  plot.areaValue = parseFloat(document.getElementById("fieldAreaValue").value) || null;
-  plot.price = document.getElementById("fieldPrice").value.trim();
-  plot.priceValue = parseInt(document.getElementById("fieldPriceValue").value) || null;
-  plot.vri = document.getElementById("fieldVri").value.trim();
-  plot.purpose = document.getElementById("fieldPurpose").value.trim();
-  plot.projectDescription = document.getElementById("fieldProjectDescription").value.trim();
-  plot.comment = document.getElementById("fieldComment").value.trim();
 }
 
 // ---------------------------------------
 // СОЗДАНИЕ НОВОГО УЧАСТКА
 // ---------------------------------------
 function editorCreateNewPlot() {
-  if (editorSelectedPlot && editorSelectedPlot.polygon.editor)
-    editorSelectedPlot.polygon.editor.stopEditing();
+  if (editorSelectedPlot && editorSelectedPlot.polygon && editorSelectedPlot.polygon.editor) {
+    try {
+      editorSelectedPlot.polygon.editor.stopEditing();
+    } catch (e) {}
+  }
 
-  const nextId =
-    Math.max(0, ...editorPlots.map(p => parseInt(p.id || 0))) + 1;
+  const nextId = Math.max(0, ...editorPlots.map(p => parseInt(p.id || 0))) + 1;
 
   const plot = {
-  id: String(nextId),
-  name: "Участок №" + nextId,
-  status: "Свободен",
-  area: "",
-  areaValue: null,
-  price: "",
-  priceValue: null,
-  vri: "",
-  purpose: "",
-  projectDescription: "",
-  comment: "",
-  zone: "",           // <<< новое поле
-  coords: []
-};
+    id: String(nextId),
+    name: "Участок №" + nextId,
+    status: "Свободен",
+    area: "",
+    areaValue: null,
+    price: "",
+    priceValue: null,
+    vri: "",
+    purpose: "",
+    projectDescription: "",
+    comment: "",
+    zone: "",
+    coords: []
+  };
 
   const c = editorColorsByStatus(plot.status);
 
+  const center = editorMap.getCenter();
+  const delta = 0.0005;
+  const polyCoords = [
+    [center[0] + delta, center[1] - delta],
+    [center[0] + delta, center[1] + delta],
+    [center[0] - delta, center[1] + delta],
+    [center[0] - delta, center[1] - delta]
+  ];
+
   const polygon = new ymaps.Polygon(
-    [],
-    { hintContent: plot.name },
+    [polyCoords],
+    {
+      hintContent: plot.name,
+      plotId: plot.id
+    },
     {
       fillColor: c.fill,
       strokeColor: c.stroke,
       strokeWidth: 2,
-      zIndex: 10,
-      cursor: "pointer"
+      draggable: true,
+      fillOpacity: 0.6
     }
   );
 
-  plot.polygon = polygon;
-  editorPlots.push(plot);
+  polygon.events.add("click", () => editorSelectPlot(plot, true));
 
   editorMap.geoObjects.add(polygon);
-  polygon.editor.startDrawing();
+  plot.polygon = polygon;
+  plot.coords = polyCoords.map(([lat, lon]) => [lon, lat]);
 
-  editorSelectedPlot = plot;
-  editorFillForm(plot);
+  editorPlots.push(plot);
+  editorSelectPlot(plot, true);
   editorRenderCards();
-  editorHighlightCard(plot.id);
 }
 
 // ---------------------------------------
-// СОХРАНЕНИЕ
+// ИНИЦИАЛИЗАЦИЯ КАРТЫ
 // ---------------------------------------
-function editorSaveCurrentPlot() {
-  if (!editorSelectedPlot) {
-    alert("Сначала выберите участок.");
-    return;
-  }
-
-  const coords = editorSelectedPlot.polygon.geometry.getCoordinates();
-  if (!coords || !coords[0] || coords[0].length < 3) {
-    alert("Участок должен содержать минимум 3 точки.");
-    return;
-  }
-
-  editorSelectedPlot.coords = coords[0].map(([lat, lon]) => [lon, lat]);
-  editorReadFormIntoPlot(editorSelectedPlot);
-
-  const c = editorColorsByStatus(editorSelectedPlot.status);
-  editorSelectedPlot.polygon.options.set({
-    fillColor: c.fill,
-    strokeColor: c.stroke
+function initEditor() {
+  editorMap = new ymaps.Map("map", {
+    center: [43.17403, 44.9941],
+    zoom: 17,
+    controls: ["zoomControl", "typeSelector", "fullscreenControl"]
   });
 
-  editorRenderCards();
-  alert("Участок сохранён. Не забудьте экспортировать JSON.");
+  editorPlanOverlay = new ymaps.GroundOverlay(
+    "plan.png",
+    {
+      // Пример привязки. При необходимости поправим под твой план.
+      // Левая нижняя и правая верхняя точки.
+      bounds: [
+        [43.1728, 44.9928],
+        [43.1752, 44.9954]
+      ]
+    },
+    {
+      opacity: 0.6,
+      visible: true,
+      zIndex: 1000
+    }
+  );
+  editorMap.geoObjects.add(editorPlanOverlay);
+
+  fetch("plotsData.json")
+    .then(r => r.json())
+    .then(arr => {
+      editorPlots = arr.map(p => ({
+        ...p,
+        polygon: null
+      }));
+      editorRenderPlots();
+      editorRenderCards();
+    })
+    .catch(err => {
+      console.warn("Не удалось загрузить plotsData.json:", err);
+    });
+
+  editorSetupUI();
 }
 
 // ---------------------------------------
-// УДАЛЕНИЕ
+// ЕДИНАЯ ФУНКЦИЯ ЭКСПОРТА JSON
 // ---------------------------------------
-function editorDeleteCurrentPlot() {
-  if (!editorSelectedPlot) {
-    alert("Выберите участок.");
-    return;
+function editorExportJson() {
+  try {
+    // 1. Обновляем coords из геометрии полигонов (на случай, если что-то не сохранено через "Сохранить")
+    editorPlots.forEach(plot => {
+      if (plot.polygon && plot.polygon.geometry) {
+        const coords = plot.polygon.geometry.getCoordinates();
+        if (coords && coords[0] && coords[0].length >= 3) {
+          // сохраняем в формате [lon, lat], как на клиентской карте
+          plot.coords = coords[0].map(([lat, lon]) => [lon, lat]);
+        }
+      }
+    });
+
+    // 2. Собираем "плоские" объекты без polygon
+    const plainPlots = editorPlots.map(plot => ({
+      id: plot.id,
+      name: plot.name,
+      status: plot.status,
+      area: plot.area,
+      areaValue: plot.areaValue ?? null,
+      price: plot.price,
+      priceValue: plot.priceValue ?? null,
+      vri: plot.vri,
+      purpose: plot.purpose,
+      projectDescription: plot.projectDescription,
+      comment: plot.comment,
+      zone: plot.zone || "",
+      coords: plot.coords || []
+    }));
+
+    // 3. Делаем файл и скачиваем
+    const json = JSON.stringify(plainPlots, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "plotsData.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+  } catch (e) {
+    console.error("Ошибка экспорта JSON:", e);
+    alert("Ошибка экспорта JSON. Открой консоль (F12) и пришли мне текст ошибки.");
   }
-
-  if (!confirm("Удалить участок " + editorSelectedPlot.name + "?")) return;
-
-  editorMap.geoObjects.remove(editorSelectedPlot.polygon);
-  editorPlots = editorPlots.filter(p => p !== editorSelectedPlot);
-  editorSelectedPlot = null;
-
-  editorRenderCards();
-  alert("Удалено.");
 }
 
 // ---------------------------------------
-// ИМПОРТ / ЭКСПОРТ
+// НАСТРОЙКА UI (кнопки)
 // ---------------------------------------
 function editorSetupUI() {
   document.getElementById("btnNewPlot").onclick = editorCreateNewPlot;
-  document.getElementById("btnSavePlot").onclick = editorSaveCurrentPlot;
-  document.getElementById("btnDeletePlot").onclick = editorDeleteCurrentPlot;
 
-      // экспорт JSON: только "чистые" данные (без polygon)
-  document.getElementById("btnExport").onclick = () => {
-    try {
-      // 1. Обновляем coords из геометрии полигонов (на случай, если что-то не сохранено через "Сохранить")
-      editorPlots.forEach(plot => {
-        if (plot.polygon && plot.polygon.geometry) {
-          const coords = plot.polygon.geometry.getCoordinates();
-          if (coords && coords[0] && coords[0].length >= 3) {
-            // сохраняем в формате [lon, lat], как на клиентской карте
-            plot.coords = coords[0].map(([lat, lon]) => [lon, lat]);
-          }
-        }
-      });
-
-      // 2. Собираем "плоские" объекты без polygon
-      const plainPlots = editorPlots.map(plot => ({
-        id: plot.id,
-        name: plot.name,
-        status: plot.status,
-        area: plot.area,
-        areaValue: plot.areaValue ?? null,
-        price: plot.price,
-        priceValue: plot.priceValue ?? null,
-        vri: plot.vri,
-        purpose: plot.purpose,
-        projectDescription: plot.projectDescription,
-        comment: plot.comment,
-        coords: plot.coords || []
-      }));
-
-      // 3. Делаем файл и скачиваем
-      const json = JSON.stringify(plainPlots, null, 2);
-      const blob = new Blob([json], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "plotsData.json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      console.error("Ошибка экспорта JSON:", e);
-      alert("Ошибка экспорта JSON. Открой консоль (F12) и пришли мне текст ошибки.");
-    }
+  // Автоматический экспорт JSON после сохранения
+  document.getElementById("btnSavePlot").onclick = () => {
+    editorSaveCurrentPlot();
+    editorExportJson();
   };
+
+  // Автоматический экспорт JSON после удаления
+  document.getElementById("btnDeletePlot").onclick = () => {
+    editorDeleteCurrentPlot();
+    editorExportJson();
+  };
+
+  // Ручной экспорт JSON по кнопке
+  document.getElementById("btnExport").onclick = editorExportJson;
 
   // импорт
   document.getElementById("inputImport").onchange = async e => {
