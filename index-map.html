@@ -59,7 +59,7 @@
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
     }
 
-    .sidebar-title {
+     .sidebar-title {
       font-size: 18px;
       font-weight: 600;
     }
@@ -83,6 +83,24 @@
       color: #9ca3af;
       margin-bottom: 4px;
     }
+
+    .error-banner {
+      background: #fef2f2;
+      border: 1px solid #fecdd3;
+      color: #991b1b;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 6px 12px rgba(239, 68, 68, 0.08);
+    }
+
+    .error-banner strong {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .error-banner[hidden] { display: none; }
 
     .card-main {
       font-size: 15px;
@@ -109,109 +127,7 @@
     .form-group input,
     .form-group textarea {
       width: 100%;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      font-size: 14px;
-      resize: vertical;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: none;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      background: linear-gradient(to right, #16a34a, #22c55e);
-      color: #ecfdf5;
-      box-shadow: 0 8px 18px rgba(22, 163, 74, 0.35);
-      width: 100%;
-      margin-top: 4px;
-    }
-
-    .note {
-      font-size: 11px;
-      color: #9ca3af;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    .status-free    { background:#dcfce7; color:#166534; }
-    .status-reserved{ background:#fef9c3; color:#854d0e; }
-    .status-sold    { background:#fee2e2; color:#991b1b; }
-    .status-municipal { background:#dbeafe; color:#1e40af; }
-
-    .list-section {
-      max-width: 1200px;
-      margin: 0 auto 24px;
-      padding: 0 16px 16px;
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .filter-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .filter-group input,
-    .filter-group select {
-      padding: 6px 8px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      min-width: 80px;
-    }
-
-    .table-wrapper {
-      background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      overflow: hidden;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    thead { background: #f9fafb; }
-
-    th, td {
-      padding: 8px 10px;
-      border-bottom: 1px solid #e5e7eb;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    tr:hover {
-      background: #f3f4f6;
-      cursor: pointer;
-    }
-
-    tr.selected-row {
-      background: #e0f2fe;
-    }
-
-    .status-dot {
-      display: inline-block;
-      width: 8px;
+@@ -215,50 +233,54 @@
       height: 8px;
       border-radius: 999px;
       margin-right: 4px;
@@ -236,6 +152,10 @@
       <div>
         <h1>Коттеджный посёлок «Алхасты»</h1>
         <p class="subtitle">Выберите участок на карте или в таблице ниже.</p>
+      </div>
+      <div id="dataError" class="error-banner" role="alert" aria-live="polite" hidden>
+        <strong>Не удалось загрузить данные участков</strong>
+        <span class="error-message">Попробуйте обновить страницу чуть позже.</span>
       </div>
       <div id="map"></div>
     </section>
@@ -262,90 +182,7 @@
         action="https://formsubmit.co/s1410@mail.RU"
         method="POST">
 
-        <!-- заполняется автоматически из выбранного участка -->
-        <input type="hidden" id="plotIdInput"     name="plot_id">
-        <input type="hidden" id="plotNameInput"   name="plot_name">
-        <input type="hidden" id="plotAreaInput"   name="plot_area">
-        <input type="hidden" id="plotPriceInput"  name="plot_price">
-        <input type="hidden" id="plotStatusInput" name="plot_status">
-
-        <div class="form-group">
-          <label for="clientName">Имя *</label>
-          <input type="text" id="clientName" name="name" required />
-        </div>
-
-        <div class="form-group">
-          <label for="clientPhone">Телефон *</label>
-          <input type="tel" id="clientPhone" name="phone" required />
-        </div>
-
-        <div class="form-group">
-          <label for="clientComment">Комментарий</label>
-          <textarea id="clientComment" name="comment"
-            placeholder="Удобное время для звонка, пожелания по дому…"></textarea>
-        </div>
-
-        <!-- служебные поля formsubmit -->
-        <input type="hidden" name="_subject" value="Заявка на участок с карты посёлка Алхасты">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://aldoshabu-del.github.io/-/index-map.html">
-
-        <button type="submit" class="btn">Отправить заявку на участок</button>
-        <div class="note">
-          Заявка уйдёт менеджеру посёлка на электронную почту. Наш специалист свяжется с вами для уточнения деталей.
-        </div>
-      </form>
-    </aside>
-  </div>
-
-  <section class="list-section">
-    <h2 style="font-size:18px; margin: 8px 0;">Список участков</h2>
-
-    <div style="display:flex; gap:8px; margin-bottom:10px;">
-      <button id="exportBtn" class="btn" style="width:auto; padding:6px 12px;">Экспорт JSON</button>
-      <label class="btn" style="width:auto; padding:6px 12px; cursor:pointer;">
-        Импорт JSON
-        <input id="importFile" type="file" accept=".json" style="display:none;">
-      </label>
-    </div>
-
-    <div class="filters">
-
-      <div class="filter-group">
-        <label>Статус</label>
-        <select id="filterStatus">
-          <option value="all">Все</option>
-          <option value="Свободен">Свободен</option>
-          <option value="Резерв">Резерв</option>
-          <option value="Продан">Продан</option>
-          <option value="Муниципальный">Муниципальный участок</option>
-        </select>
-      </div>
-
-      <div class="filter-group">
-        <label>Площадь от (сотки)</label>
-        <input type="number" id="filterAreaMin" />
-      </div>
-
-      <div class="filter-group">
-        <label>Площадь до (сотки)</label>
-        <input type="number" id="filterAreaMax" />
-      </div>
-
-      <div class="filter-group">
-        <label>Цена от (₽)</label>
-        <input type="number" id="filterPriceMin" />
-      </div>
-
-      <div class="filter-group">
-        <label>Цена до (₽)</label>
-        <input type="number" id="filterPriceMax" />
-      </div>
-
-      <button id="resetFiltersBtn" type="button" class="btn" style="width:auto; padding:6px 12px;">
-        Сбросить
-      </button>
-    </div>
+@@ -349,94 +371,118 @@
 
     <div class="table-wrapper">
       <table>
@@ -371,12 +208,22 @@
     let myMap;
     let plotsData = [];
     let selectedPlot = null;
+    const dataError = document.getElementById("dataError");
+    const dataErrorText = dataError?.querySelector(".error-message");
+
+    function normalizeStatus(status) {
+      return (status || "").toLowerCase();
+    }
 
     function statusClass(s) {
       s = s.toLowerCase();
       if (s.includes("муниц")) return "status-municipal";
       if (s.includes("прод")) return "status-sold";
       if (s.includes("резерв")) return "status-reserved";
+      const normalized = normalizeStatus(s);
+      if (normalized.includes("муниц")) return "status-municipal";
+      if (normalized.includes("прод")) return "status-sold";
+      if (normalized.includes("резерв")) return "status-reserved";
       return "status-free";
     }
 
@@ -385,6 +232,10 @@
       if (s.includes("муниц")) return "dot-municipal";
       if (s.includes("прод")) return "dot-sold";
       if (s.includes("резерв")) return "dot-reserved";
+      const normalized = normalizeStatus(s);
+      if (normalized.includes("муниц")) return "dot-municipal";
+      if (normalized.includes("прод")) return "dot-sold";
+      if (normalized.includes("резерв")) return "dot-reserved";
       return "dot-free";
     }
 
@@ -393,7 +244,20 @@
       if (s.includes("муниц")) return {fill:"#60A5FA55",stroke:"#2563EB"};
       if (s.includes("прод")) return {fill:"#EF444455",stroke:"#B91C1C"};
       if (s.includes("резерв")) return {fill:"#FACC1555",stroke:"#CA8A04"};
+      const normalized = normalizeStatus(s);
+      if (normalized.includes("муниц")) return {fill:"#60A5FA55",stroke:"#2563EB"};
+      if (normalized.includes("прод")) return {fill:"#EF444455",stroke:"#B91C1C"};
+      if (normalized.includes("резерв")) return {fill:"#FACC1555",stroke:"#CA8A04"};
       return {fill:"#22C55E55",stroke:"#16A34A"};
+    }
+
+    function showDataError(message) {
+      if (dataErrorText) {
+        dataErrorText.textContent = message;
+      }
+      if (dataError) {
+        dataError.hidden = false;
+      }
     }
 
     function init() {
@@ -408,6 +272,12 @@
 
       fetch("plotsData.json")
         .then(r => r.json())
+        .then(r => {
+          if (!r.ok) {
+            throw new Error(`Ответ сервера: ${r.status}`);
+          }
+          return r.json();
+        })
         .then(data => {
           plotsData = data;
           renderPlots();
@@ -415,6 +285,10 @@
           setupFilters();
           setupImportExport();
           setupForm();
+        })
+        .catch(err => {
+          console.error("Не удалось загрузить plotsData.json:", err);
+          showDataError("Не удалось загрузить данные участков. Попробуйте обновить страницу позже.");
         });
     }
 
